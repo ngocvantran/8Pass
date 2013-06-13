@@ -22,6 +22,10 @@ namespace Wp8Pass.Store.Tests.Bootstrap
 
             _container = new WinRTContainer();
             _container.RegisterWinRTServices();
+            _container.RegisterInstance(
+                typeof(INavigationService),
+                null, new MockNavigation());
+
             _container.RegisterAppServices();
         }
 
@@ -55,6 +59,17 @@ namespace Wp8Pass.Store.Tests.Bootstrap
         {
             Assert.IsNotNull(_container
                 .GetInstance<IDatabaseManager>());
+        }
+
+        [TestMethod]
+        public void Should_Resolve_Startup_Page()
+        {
+            var startup = _container
+                .GetInstance<StartupViewModel>();
+
+            Assert.IsNotNull(startup);
+            Assert.IsInstanceOfType(startup.Items[0],
+                typeof(DbSelectViewModel));
         }
 
         [TestMethod]

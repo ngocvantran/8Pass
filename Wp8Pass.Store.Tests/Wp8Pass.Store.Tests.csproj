@@ -111,6 +111,7 @@
     <SDKReference Include="TestPlatform, Version=11.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrap\MockNavigation.cs" />
     <Compile Include="Bootstrap\RegistriesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

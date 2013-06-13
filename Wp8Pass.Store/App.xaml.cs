@@ -4,7 +4,7 @@ using Caliburn.Micro;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml.Controls;
 using Wp8Pass.Store.Bootstrap;
-using Wp8Pass.Store.ViewModels;
+using Wp8Pass.Store.Views;
 
 namespace Wp8Pass.Store
 {
@@ -15,6 +15,7 @@ namespace Wp8Pass.Store
         public App()
         {
             InitializeComponent();
+            LogManager.GetLog = x => new DebugLogger(x);
         }
 
         protected override void BuildUp(object instance)
@@ -41,7 +42,7 @@ namespace Wp8Pass.Store
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            DisplayRootViewFor<DbSelectViewModel>();
+            DisplayRootView<StartupView>();
         }
 
         protected override void PrepareViewFirst(Frame rootFrame)

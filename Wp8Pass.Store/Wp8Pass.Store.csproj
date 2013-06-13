@@ -105,22 +105,33 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Bootstrap\ConductorViewModelBase.cs" />
+    <Compile Include="Bootstrap\DebugLogger.cs" />
     <Compile Include="Bootstrap\Registries.cs" />
     <Compile Include="Bootstrap\SingletonAttribute.cs" />
+    <Compile Include="Bootstrap\ViewModelBase.cs" />
     <Compile Include="Services\DatabaseManager.cs" />
     <Compile Include="Services\DatabaseRegistration.cs" />
     <Compile Include="Services\IDatabaseManager.cs" />
+    <Compile Include="ViewModels\StartupViewModel.cs" />
+    <Compile Include="Views\DbSelectItemView.xaml.cs">
+      <DependentUpon>DbSelectItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DbSelectView.xaml.cs">
       <DependentUpon>DbSelectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DbSelectItemViewModel.cs" />
     <Compile Include="ViewModels\DbSelectViewModel.cs" />
+    <Compile Include="Views\StartupView.xaml.cs">
+      <DependentUpon>StartupView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <PRIResource Include="Assets\Strings\en-US\Resources.resw" />
     <None Include="packages.config" />
     <None Include="Wp8Pass.Store_TemporaryKey.pfx" />
   </ItemGroup>
@@ -139,9 +150,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\DbSelectItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DbSelectView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StartupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -158,7 +177,9 @@
       <HintPath>..\packages\Windows.UI.Interactivity.1.3.0.0\lib\win8\Windows.UI.Interactivity.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

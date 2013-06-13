@@ -2,12 +2,13 @@
 using System.Linq;
 using System.Reflection;
 using Caliburn.Micro;
+using Wp8Pass.Store.ViewModels;
 
 namespace Wp8Pass.Store.Bootstrap
 {
     public static class Registries
     {
-        public static T GetInstance<T>(this WinRTContainer container)
+        public static T GetInstance<T>(this SimpleContainer container)
         {
             return (T)container.GetInstance(typeof(T), null);
         }
@@ -25,7 +26,16 @@ namespace Wp8Pass.Store.Bootstrap
                 ? result : null;
         }
 
-        public static void RegisterAppServices(this WinRTContainer container)
+        public static void RegisterAppServices(this SimpleContainer container)
+        {
+            if (container == null)
+                throw new ArgumentNullException("container");
+
+            SpecialCases(container);
+            ApplyConventions(container);
+        }
+
+        private static void ApplyConventions(this SimpleContainer container)
         {
             if (container == null)
                 throw new ArgumentNullException("container");
@@ -40,8 +50,9 @@ namespace Wp8Pass.Store.Bootstrap
             // View Models
             types
                 .Where(x => x.Name.EndsWith("ViewModel"))
-                .Apply(x => container.RegisterPerRequest(
-                    x.AsType(), null, x.AsType()));
+                .Select(x => x.AsType())
+                .Where(x => !container.HasHandler(x, null))
+                .Apply(x => container.RegisterPerRequest(x, null, x));
 
             // Services
             types
@@ -69,6 +80,20 @@ namespace Wp8Pass.Store.Bootstrap
                             x.Interface, null, x.Type);
                     }
                 });
+        }
+
+        private static void SpecialCases(SimpleContainer container)
+        {
+            container.Handler<StartupViewModel>(x =>
+            {
+                var items = new Screen[]
+                {
+                    x.GetInstance<DbSelectViewModel>(),
+                };
+
+                return new StartupViewModel(items,
+                    x.GetInstance<INavigationService>());
+            });
         }
     }
 }
